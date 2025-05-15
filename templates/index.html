@@ -1,0 +1,64 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Geetify 🎧</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Geetify</h1>
+    <p class="tagline">Mood-based Music Recommendation</p>
+
+    <div class="form-group">
+      <label for="moodSelect">Select Your Mood:</label>
+      <select id="moodSelect">
+        <option value="">-- Choose Mood --</option>
+      </select>
+      <button onclick="getSongs()">Get Songs</button>
+    </div>
+
+    <div class="songs-section">
+      <h2>Songs for Your Mood</h2>
+      <ul id="songsList"></ul>
+    </div>
+  </div>
+
+  <script>
+    async function loadMoods() {
+      try {
+        const res = await fetch("/moods");
+        const data = await res.json();
+        const select = document.getElementById("moodSelect");
+        data.moods.forEach(mood => {
+          const option = document.createElement("option");
+          option.value = mood;
+          option.text = mood.charAt(0).toUpperCase() + mood.slice(1);
+          select.appendChild(option);
+        });
+      } catch (err) {
+        console.error("Error loading moods:", err);
+      }
+    }
+
+    async function getSongs() {
+      const mood = document.getElementById("moodSelect").value;
+      if (!mood) return;
+      const res = await fetch(`/music?mood=${mood}`);
+      const data = await res.json();
+      const songsList = document.getElementById("songsList");
+      songsList.innerHTML = "";
+
+      data.songs.forEach(song => {
+        const li = document.createElement("li");
+        li.textContent = song;
+        songsList.appendChild(li);
+      });
+    }
+
+    window.onload = loadMoods;
+  </script>
+</body>
+</html>

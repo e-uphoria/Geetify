@@ -1,27 +1,27 @@
 # 🎧 Geetify – Mood-Based Music Suggester
 
 A simple FastAPI microservice that suggests music tracks based on your current mood.
+
 🚀 Features
 
-    Suggest songs for moods like happy, sad, and focus
+- Suggest songs for moods like happy, sad, and focus
 
-    Simple REST API with two main endpoints:
+- Simple REST API with two main endpoints:
+  - `/moods` — lists all available moods
+  - `/music?mood={mood}` — returns song suggestions for the specified mood
 
-        /moods — lists all available moods
+- Uses a JSON file (`songs.json`) as the data source (no database needed)
 
-        /music?mood={mood} — returns song suggestions for the specified mood
+- Configurable via environment variables using Pydantic and `.env`
 
-    Uses a JSON file (songs.json) as the data source (no database needed)
+- Dockerized for easy deployment and consistency
 
-    Configurable via environment variables using Pydantic and .env
+- Includes automated testing with Pytest
 
-    Dockerized for easy deployment and consistency
+- Continuous Integration workflow using GitHub Actions
 
-    Includes automated testing with Pytest
+- Serves a simple homepage rendered with Jinja2 templates
 
-    Continuous Integration workflow using GitHub Actions
-
-    Serves a simple homepage rendered with Jinja2 templates
 
 ## 🚀 How to Run
 
